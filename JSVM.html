@@ -3,7 +3,7 @@
 <head>
 <title>JSVM</title>
 </head>
-<body>
+<body onload="reset();">
 <h1 style="text-align: center">
 JSVM
 </h1>
@@ -14,20 +14,71 @@ JSVM
 <p style="flex:1">Direct Machine code</p>
 </div>
 <div style="text-align: center; display:flex">
-<textarea
+<textarea id="ASM"
 style="flex:1; margin-right: 5px" rows=20>
 </textarea>
-<textarea
+<textarea id="DMC"
 style="flex:1">
 </textarea>
 </div>
+<div style="text-align: center; display:flex">
+<button onclick="asm();" style="flex:1">Assemble</button>
+<button onclick="load();" style="flex:1">Load</button>
+<button onclick="reset();" style="flex:1">Reset</button>
+<button onclick="exec();" style="flex:1">Execute</button>
 </div>
-<div style="width:400px; text-align: center; margin-left: 10px">
+<table style="margin-top: 5px; text-align: center">
+  <th>Op Code<td><b>Assembly</b></td><td><b>Op Code</b></td><td><b>Assembly</b></td></th>
+  <tr><td>00</td><td>NOP</td><td>80</td><td>NOT</td></tr>
+  <tr><td>10</td><td>LDA &#60x&#62</td><td>9X</td><td>AND</td></tr>
+  <tr><td>20</td><td>SDA &#60x&#62</td><td>A0</td><td>OR</td></tr>
+  <tr><td>3X</td><td>SWP A,B</td><td>B0</td><td>XOR</td></tr>
+  <tr><td>40</td><td>ADD</td><td>C0</td><td>PUSH</td></tr>
+  <tr><td>5X</td><td>JMP &#60x&#62</td><td>D0</td><td>POP</td></tr>
+  <tr><td>6X</td><td>CALL &#60x&#62</td><td>EX</td><td>IO</td></tr>
+  <tr><td>70</td><td>CMP</td><td>FX</td><td>RET</td></tr>
+  <th>Main OP<td><b>Sub Op</b></td><td><b>Assembly</b></td><td><b>Condition</b></td></th>
+  <tr><td>3X</td><td>38</td><td>SWP A,SP</td><td>N/A</td></tr>
+  <tr><td>5X</td><td>51</td><td>JE</td><td>==</td></tr>
+  <tr><td>5X</td><td>52</td><td>JG</td><td>></td></tr>
+  <tr><td>5X</td><td>53</td><td>JL</td><td><</td></tr>
+  <tr><td>5X</td><td>54</td><td>JGE</td><td>>=</td></tr>
+  <tr><td>5X</td><td>55</td><td>JLE</td><td><=</td></tr>
+  <tr><td>5X</td><td>56</td><td>JNE</td><td>!=</td></tr>
+  <tr><td>6X</td><td>61</td><td>CE</td><td>==</td></tr>
+  <tr><td>6X</td><td>62</td><td>CG</td><td>></td></tr>
+  <tr><td>6X</td><td>63</td><td>CL</td><td><</td></tr>
+  <tr><td>6X</td><td>64</td><td>CGE</td><td>>=</td></tr>
+  <tr><td>6X</td><td>55</td><td>CLE</td><td><=</td></tr>
+  <tr><td>6X</td><td>66</td><td>CNE</td><td>!=</td></tr>
+  <tr><td>EX</td><td>E0</td><td>OUT 0</td><td>N/A</td></tr>
+  <tr><td>EX</td><td>E1</td><td>OUT 1</td><td>N/A</td></tr>
+  <tr><td>EX</td><td>E2</td><td>OUT 2</td><td>N/A</td></tr>
+  <tr><td>EX</td><td>E3</td><td>OUT 3</td><td>N/A</td></tr>
+  <tr><td>EX</td><td>E4</td><td>OUT 4</td><td>N/A</td></tr>
+  <tr><td>EX</td><td>E5</td><td>OUT 5</td><td>N/A</td></tr>
+  <tr><td>EX</td><td>E6</td><td>OUT 6</td><td>N/A</td></tr>
+  <tr><td>EX</td><td>E7</td><td>OUT 7</td><td>N/A</td></tr>
+  <tr><td>EX</td><td>E8</td><td>IN 0</td><td>N/A</td></tr>
+  <tr><td>EX</td><td>E9</td><td>IN 1</td><td>N/A</td></tr>
+  <tr><td>EX</td><td>EA</td><td>IN 2</td><td>N/A</td></tr>
+  <tr><td>EX</td><td>EB</td><td>IN 3</td><td>N/A</td></tr>
+  <tr><td>EX</td><td>EC</td><td>IN 4</td><td>N/A</td></tr>
+  <tr><td>EX</td><td>ED</td><td>IN 5</td><td>N/A</td></tr>
+  <tr><td>EX</td><td>EE</td><td>IN 6</td><td>N/A</td></tr>
+  <tr><td>EX</td><td>EF</td><td>IN 7</td><td>N/A</td></tr>
+  <tr><td>9X</td><td>97</td><td>SHL</td><td>N/A</td></tr>
+  <tr><td>9X</td><td>9F</td><td>SHR</td><td>N/A</td></tr>
+  <tr><td>FX</td><td>FF</td><td>HLT</td><td>N/A</td></tr>
+</table>
+</div>
+<div style="width:550px; text-align: center; margin-left: 10px">
 <h3>Registers</h3>
 <div style="display: flex">
-  Instruction Pointer:<textarea class="MEM" rows=1 readonly=true cols=4></textarea>
-  Accumulator(RA):<textarea class="MEM" rows=1 readonly=true cols=4></textarea>
-  RB:<textarea rows=1 readonly=true cols=4></textarea>
+  Instruction Pointer:<textarea id="IP" class="MEM" rows=1 readonly=true cols=4></textarea>
+  Accumulator(RA):<textarea id="RA" class="MEM" rows=1 readonly=true cols=4></textarea>
+  RB:<textarea id="RB" class="MEM" rows=1 readonly=true cols=4></textarea>
+  Stack Pointer:<textarea id="SP" rows=1 readonly=true cols=4></textarea>
 </div>
 <h3>Memory</h3>
 <table>
@@ -341,18 +392,264 @@ style="flex:1">
 <td><textarea id="AFF" rows=1 cols=2 readonly=true></textarea></td>
 </tr>
 </table>
+<textarea id="console" readonly=true rows=3 cols=58></textarea>
 </div>
 </div>
 <style>
 textarea{
   resize: none
 }
-th, td, table{
+td > textarea{
+  border: none
+}
+td, th, table{
   border: 1px solid black
+}
+table{
+  margin-left: auto;
+  margin-right: auto;
 }
 .MEM{
   margin-right: 5px
 }
 </style>
+<script>
+function extend(value, len){
+  let tmp=value.toString(16).toUpperCase();
+  while(tmp.length<len){
+    tmp="0"+tmp;
+  }
+  return tmp;
+}
+function handleIO(){
+  for(i=0; i<8; i++){
+    if(IOFUNC[i]!=null) IOFUNC[i](IO[i]);
+    IO[i]=0;
+  }
+}
+function CONSOLE(data){
+  if(data==0) return;
+  let term=document.getElementById("console");
+  if(data==8) term.innerHTML = term.innerHTML.slice(0, -1);
+  else if(data==12) term.innerHTML = ""
+  else term.innerHTML = term.innerHTML + String.fromCharCode(data);
+}
+function push(value){
+  MEM[SP]=value;
+  SP--;
+}
+function pop(){
+  SP++;
+  return MEM[SP];
+}
+function updateVM(){
+  document.getElementById("IP").innerHTML = extend(IP, 4);
+  document.getElementById("RA").innerHTML = extend(RA, 4);
+  document.getElementById("RB").innerHTML = extend(RB, 4);
+  document.getElementById("SP").innerHTML = extend(SP, 4);
+  for(i=0; i<256; i++){
+    document.getElementById("A"+extend(i,2)).innerHTML = extend(MEM[(MEM_REGION*16)+i],2);
+  }
+}
+let MEM_REGION=0;
+let IP=0;
+let RA=0;
+let RB=0;
+let SP=0;
+let MEM=[];
+let RR=0;
+let IO=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+let IOFUNC = [CONSOLE, null, null, null, null, null, null, null];
+function reset(){
+  IP=0;
+  RA=0;
+  RB=0;
+  SP=0;
+  RR=0;
+  IO=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+  MEM=[];
+  CONSOLE(12);
+  for(i=0; i<256; i++){
+    MEM.push(0);
+  }
+  updateVM();
+}
+function load(){
+  let read = document.getElementById("DMC").value.split("\n");
+  let addr=0;
+  for(i=0; i<read.length; i++){
+    if(read[i][1]=="x"){
+      if(read[i].includes(":")){
+        MEM[parseInt(read[i].split(":")[0],16)] = parseInt(read[i].split(":")[1],16);
+      } else{
+        MEM[addr]=parseInt(read[i],16);
+        addr++;
+      }
+    } else{
+      if(read[i].includes(":")){
+        MEM[parseInt(read[i].split(":")[0],2)] = parseInt(read[i].split(":")[1],2);
+      } else{
+        MEM[addr]=parseInt(read[i],2);
+        addr++;
+      }
+    }
+  }
+  run=false;
+  updateVM();
+}
+let run=true;
+function exec(){
+  run=true
+  while(MEM[IP]!=255 && run){
+    if(MEM[IP]==16){//LDA <X>
+      let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
+      IP+=2;
+      RA=MEM[tmp];
+    } else if(MEM[IP]==32){//SDA <X>
+      let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
+      IP+=2;
+      MEM[tmp]=RA;
+    } else if(MEM[IP]==48){//SWP A,B
+      let tmp=RA;
+      RA=RB;
+      RB=RA;
+    } else if(MEM[IP]==56){//SWP A,SP
+      let tmp=RA;
+      RA=SP;
+      SP=tmp;
+    } else if(MEM[IP]==64){
+      RA+=RB
+    } else if(MEM[IP]==80){ //JMP
+      let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
+      IP+=2;
+      IP=tmp;
+    } else if(MEM[IP]==81){ //JE
+      let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
+      IP+=2;
+      if(RR==0) IP=tmp-1;
+    } else if(MEM[IP]==82){ //JG
+      let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
+      IP+=2;
+      if(RR==1) IP=tmp-1;
+    } else if(MEM[IP]==83){//JL
+      let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
+      IP+=2;
+      if(RR==-1) IP=tmp-1;
+    } else if(MEM[IP]==84){//JGE
+      let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
+      IP+=2;
+      if(RR!=-1) IP=tmp-1;
+    } else if(MEM[IP]==85){//JLE
+      let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
+      IP+=2;
+      if(RR!=1) IP=tmp-1;
+    } else if(MEM[IP]==86){//JNE
+      let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
+      IP+=2;
+      if(RR!=0) IP=tmp-1;
+    } else if(MEM[IP]==96){ //CALL
+      push(tmp%256);
+      push(Math.floor(tmp/256))
+      let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
+      IP+=2;
+      IP=tmp;
+    } else if(MEM[IP]==97){ //CE
+      let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
+      IP+=2;
+      if(RR==0){
+        push(tmp%256);
+        push(Math.floor(tmp/256));
+        IP=tmp-1;
+      }
+    } else if(MEM[IP]==98){ //CG
+      let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
+      IP+=2;
+      if(RR==1) {
+        push(tmp%256);
+        push(Math.floor(tmp/256));
+        IP=tmp-1;
+      }
+    } else if(MEM[IP]==99){//CL
+      let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
+      IP+=2;
+      if(RR==-1) {
+        push(tmp%256);
+        push(Math.floor(tmp/256));
+        IP=tmp-1;
+      }
+    } else if(MEM[IP]==100){//CGE
+      let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
+      IP+=2;
+      if(RR!=-1) {
+        push(tmp%256);
+        push(Math.floor(tmp/256));
+        IP=tmp-1;
+      }
+    } else if(MEM[IP]==101){//CLE
+      let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
+      IP+=2;
+      if(RR!=1) {
+        push(tmp%256);
+        push(Math.floor(tmp/256));
+        IP=tmp-1;
+      }
+    } else if(MEM[IP]==102){//CNE
+      let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
+      IP+=2;
+      if(RR!=0) {
+        push(tmp%256);
+        push(Math.floor(tmp/256));
+        IP=tmp-1;
+      }
+    } else if(MEM[IP]==112){ //CMP
+      RR=Math.sign(RB-RA);
+    } else if(MEM[IP]==128){//NOT
+      let tmp=RA.toString(2).split('');
+      for(i=0; i<tmp.length; i++){
+        tmp[i] = tmp[i]=='0' ? '1':'0';
+      }
+      RA=parseInt(tmp.join(''),2);
+    } else if(MEM[IP]==144){//AND
+      let tmp=RA.toString(2).split('');
+      let tmp2=RA.toString(2).split('');
+      for(i=0; i<tmp.length; i++){
+        tmp[i] = tmp[i]==tmp2[i] ? '1':'0';
+      }
+      RA=parseInt(tmp.join(''),2);
+    } else if(MEM[IP]==160){//OR
+      let tmp=RA.toString(2).split('');
+      let tmp2=RA.toString(2).split('');
+      for(i=0; i<tmp.length; i++){
+        tmp[i] = (tmp[i]=='1' || tmp2[i]=='1') ? '1':'0';
+      }
+      RA=parseInt(tmp.join(''),2);
+    } else if(MEM[IP]==176){ //XOR
+      let tmp=RA.toString(2).split('');
+      let tmp2=RA.toString(2).split('');
+      for(i=0; i<tmp.length; i++){
+        tmp[i] = tmp[i]!=tmp2[i] ? '1':'0';
+      }
+      RA=parseInt(tmp.join(''),2);
+    } else if(MEM[IP]==192){ //PUSH
+      push(RA);
+    } else if(MEM[IP]==208){ //POP
+      RA=pop();
+    } else if(Math.floor(MEM[IP]/16)==14){
+      if(MEM[IP]>=232){
+        RA=IO[MEM[IP]%16];
+      } else{
+        IO[MEM[IP]%16]=RA;
+      }
+    }else if(MEM[IP]==240){
+      IP=pop()*256;
+      IP+=pop()
+    }
+    IP++;
+    updateVM();
+    handleIO();
+    setTimeout(exec, 10);
+  }
+}
+</script>
 </body>
 </html>

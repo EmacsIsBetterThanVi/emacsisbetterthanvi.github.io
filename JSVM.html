@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>JSVM</title>
+</head>
+<body>
+<h1 style="text-align: center">
+JSVM
+</h1>
+<div style="display: flex">
+<div style="width: 400px">
+<div style="text-align: center; display:flex">
+<p style="flex:1">Assembly</p>
+<p style="flex:1">Direct Machine code</p>
+</div>
+<div style="text-align: center; display:flex">
+<textarea
+style="flex:1; margin-right: 5px" rows=20>
+</textarea>
+<textarea
+style="flex:1">
+</textarea>
+</div>
+</div>
+<div style="width:400px; text-align: center; margin-left: 10px">
+<h3>Registers</h3>
+<div style="display: flex">
+  Instruction Pointer:<textarea class="MEM" rows=1 readonly=true cols=4></textarea>
+  Accumulator(RA):<textarea class="MEM" rows=1 readonly=true cols=4></textarea>
+  RB:<textarea rows=1 readonly=true cols=4></textarea>
+</div>
+<h3>Memory</h3>
+<table>
+<th>
+<td>X0</td><td>X1</td><td>X2</td><td>X3</td>
+<td>X4</td><td>X5</td><td>X6</td><td>X7</td>
+<td>X8</td><td>X9</td><td>XA</td><td>XB</td>
+<td>XC</td><td>XD</td><td>XE</td><td>XF</td>
+</th>
+<tr>
+<td>0X</td>
+<td><textarea id="A00" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A01" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A02" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A03" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A04" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A05" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A06" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A07" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A08" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A09" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A0A" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A0B" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A0C" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A0D" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A0E" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A0F" rows=1 cols=2 readonly=true></textarea></td>
+</tr>
+<tr>
+<td>1X</td>
+<td><textarea id="A10" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A11" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A12" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A13" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A14" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A15" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A16" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A17" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A18" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A19" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A1A" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A1B" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A1C" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A1D" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A1E" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A1F" rows=1 cols=2 readonly=true></textarea></td>
+</tr>
+<tr>
+<td>2X</td>
+<td><textarea id="A20" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A21" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A22" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A23" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A24" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A25" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A26" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A27" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A28" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A29" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A2A" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A2B" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A2C" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A2D" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A2E" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A2F" rows=1 cols=2 readonly=true></textarea></td>
+</tr>
+<tr>
+<td>3X</td>
+<td><textarea id="A30" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A31" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A32" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A33" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A34" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A35" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A36" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A37" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A38" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A39" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A3A" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A3B" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A3C" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A3D" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A3E" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A3F" rows=1 cols=2 readonly=true></textarea></td>
+</tr>
+<tr>
+<td>4X</td>
+<td><textarea id="A40" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A41" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A42" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A43" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A44" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A45" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A46" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A47" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A48" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A49" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A4A" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A4B" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A4C" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A4D" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A4E" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A4F" rows=1 cols=2 readonly=true></textarea></td>
+</tr>
+<tr>
+<td>5X</td>
+<td><textarea id="A50" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A51" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A52" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A53" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A54" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A55" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A56" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A57" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A58" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A59" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A5A" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A5B" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A5C" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A5D" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A5E" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A5F" rows=1 cols=2 readonly=true></textarea></td>
+</tr>
+<tr>
+<td>6X</td>
+<td><textarea id="A60" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A61" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A62" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A63" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A64" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A65" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A66" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A67" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A68" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A69" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A6A" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A6B" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A6C" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A6D" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A6E" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A6F" rows=1 cols=2 readonly=true></textarea></td>
+</tr>
+<tr>
+<td>7X</td>
+<td><textarea id="A70" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A71" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A72" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A73" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A74" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A75" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A76" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A77" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A78" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A79" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A7A" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A7B" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A7C" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A7D" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A7E" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A7F" rows=1 cols=2 readonly=true></textarea></td>
+</tr>
+<tr>
+<td>8X</td>
+<td><textarea id="A80" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A81" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A82" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A83" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A84" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A85" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A86" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A87" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A88" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A89" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A8A" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A8B" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A8C" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A8D" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A8E" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A8F" rows=1 cols=2 readonly=true></textarea></td>
+</tr>
+<tr>
+<td>9X</td>
+<td><textarea id="A90" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A91" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A92" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A93" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A94" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A95" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A96" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A97" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A98" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A99" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A9A" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A9B" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A9C" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A9D" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A9E" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="A9F" rows=1 cols=2 readonly=true></textarea></td>
+</tr>
+<tr>
+<td>AX</td>
+<td><textarea id="AA0" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AA1" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AA2" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AA3" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AA4" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AA5" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AA6" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AA7" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AA8" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AA9" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AAA" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AAB" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AAC" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AAD" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AAE" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AAF" rows=1 cols=2 readonly=true></textarea></td>
+</tr>
+<tr>
+<td>BX</td>
+<td><textarea id="AB0" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AB1" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AB2" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AB3" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AB4" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AB5" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AB6" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AB7" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AB8" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AB9" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="ABA" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="ABB" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="ABC" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="ABD" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="ABE" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="ABF" rows=1 cols=2 readonly=true></textarea></td>
+</tr>
+<tr>
+<td>CX</td>
+<td><textarea id="AC0" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AC1" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AC2" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AC3" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AC4" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AC5" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AC6" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AC7" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AC8" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AC9" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="ACA" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="ACB" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="ACC" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="ACD" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="ACE" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="ACF" rows=1 cols=2 readonly=true></textarea></td>
+</tr>
+<tr>
+<td>DX</td>
+<td><textarea id="AD0" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AD1" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AD2" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AD3" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AD4" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AD5" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AD6" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AD7" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AD8" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AD9" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="ADA" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="ADB" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="ADC" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="ADD" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="ADE" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="ADF" rows=1 cols=2 readonly=true></textarea></td>
+</tr>
+<tr>
+<td>EX</td>
+<td><textarea id="AE0" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AE1" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AE2" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AE3" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AE4" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AE5" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AE6" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AE7" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AE8" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AE9" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AEA" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AEB" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AEC" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AED" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AEE" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AEF" rows=1 cols=2 readonly=true></textarea></td>
+</tr>
+<td>FX</td>
+<td><textarea id="AF0" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AF1" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AF2" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AF3" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AF4" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AF5" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AF6" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AF7" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AF8" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AF9" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AFA" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AFB" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AFC" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AFD" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AFE" rows=1 cols=2 readonly=true></textarea></td>
+<td><textarea id="AFF" rows=1 cols=2 readonly=true></textarea></td>
+</tr>
+</table>
+</div>
+</div>
+<style>
+textarea{
+  resize: none
+}
+th, td, table{
+  border: 1px solid black
+}
+.MEM{
+  margin-right: 5px
+}
+</style>
+</body>
+</html>

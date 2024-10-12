@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE>
 <html>
 <head>
 <title>JSVM</title>
@@ -32,13 +32,13 @@ style="flex:1">
   <tr><td>00</td><td>NOP</td><td>80</td><td>NOT</td></tr>
   <tr><td>10</td><td>LDA &#60x&#62</td><td>9X</td><td>AND</td></tr>
   <tr><td>20</td><td>SDA &#60x&#62</td><td>A0</td><td>OR</td></tr>
-  <tr><td>3X</td><td>SWP A,B</td><td>B0</td><td>XOR</td></tr>
+  <tr><td>3X</td><td>SWPB</td><td>B0</td><td>XOR</td></tr>
   <tr><td>40</td><td>ADD</td><td>C0</td><td>PUSH</td></tr>
   <tr><td>5X</td><td>JMP &#60x&#62</td><td>D0</td><td>POP</td></tr>
   <tr><td>6X</td><td>CALL &#60x&#62</td><td>EX</td><td>IO</td></tr>
   <tr><td>70</td><td>CMP</td><td>FX</td><td>RET</td></tr>
   <th>Main OP<td><b>Sub Op</b></td><td><b>Assembly</b></td><td><b>Condition</b></td></th>
-  <tr><td>3X</td><td>38</td><td>SWP A,SP</td><td>N/A</td></tr>
+  <tr><td>3X</td><td>38</td><td>SWPS</td><td>N/A</td></tr>
   <tr><td>5X</td><td>51</td><td>JE</td><td>==</td></tr>
   <tr><td>5X</td><td>52</td><td>JG</td><td>></td></tr>
   <tr><td>5X</td><td>53</td><td>JL</td><td><</td></tr>
@@ -78,7 +78,7 @@ style="flex:1">
   Instruction Pointer:<textarea id="IP" class="MEM" rows=1 readonly=true cols=4></textarea>
   Accumulator(RA):<textarea id="RA" class="MEM" rows=1 readonly=true cols=4></textarea>
   RB:<textarea id="RB" class="MEM" rows=1 readonly=true cols=4></textarea>
-  Stack Pointer:<textarea id="SP" rows=1 readonly=true cols=4></textarea>
+  Stack Pointer:<textarea class="MEM" id="SP" rows=1 readonly=true cols=4></textarea>
 </div>
 <h3>Memory</h3>
 <table>
@@ -397,9 +397,19 @@ style="flex:1">
 </div>
 <style>
 textarea{
+  background-color: black;
+  color: lightgreen;
   resize: none
 }
+h1{
+  color: red
+}
+body{
+  background-color: lightblue
+}
 td > textarea{
+  background-color: lightblue;
+  color: black;
   border: none
 }
 td, th, table{
@@ -409,8 +419,14 @@ table{
   margin-left: auto;
   margin-right: auto;
 }
+button{
+  background-color: blue;
+  color: white;
+}
 .MEM{
-  margin-right: 5px
+  margin-right: 5px;
+  color: black;
+  background-color: lightblue
 }
 </style>
 <script>
@@ -425,7 +441,10 @@ function handleIO(){
   for(i=0; i<8; i++){
     if(IOFUNC[i]!=null) IOFUNC[i](IO[i]);
     IO[i]=0;
-  }
+  } 
+  for(i=8; i<16; i++){
+    if(IOFUNC[i]!=null) IOFUNC[i](i);
+  } 
 }
 function CONSOLE(data){
   if(data==0) return;
@@ -459,7 +478,7 @@ let SP=0;
 let MEM=[];
 let RR=0;
 let IO=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-let IOFUNC = [CONSOLE, null, null, null, null, null, null, null];
+let IOFUNC = [CONSOLE, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
 function reset(){
   IP=0;
   RA=0;
@@ -649,6 +668,117 @@ function exec(){
     handleIO();
     setTimeout(exec, 10);
   }
+}
+function asm(){
+  let code=document.getElementById("ASM").value.split("\n");
+  let mc=[];
+  let line=[];
+  for(i=0; i<code.length; i++){
+    line=code[i].split(" ");
+    if(line[0]=='db'){
+      if(line.length>=3) mc.push("0x"+line[1]+":"+line[2])
+      else mc.push("0x"+line[1]);
+    } else if(line[0]=="NOP"){
+      mc.push(0);
+    } else if(line[0]=="LDA"){
+      mc.push("0x10");
+      mc.push("0x"+Math.floor(parseInt(line[1],16)/256).toString(16));
+      mc.push("0x"+Math.floor(parseInt(line[1],16)%256).toString(16));
+    } else if(line[0]=="SDA"){
+      mc.push("0x20");
+      mc.push("0x"+Math.floor(parseInt(line[1],16)/256).toString(16));
+      mc.push("0x"+Math.floor(parseInt(line[1],16)%256).toString(16));
+    } else if(line[0]=="SWPB"){
+      mc.push("0x30");
+    } else if(line[0]=="SWPS"){
+      mc.push("0x3S");
+    } else if(line[0]=="ADD"){
+      mc.push("0x40");
+    } else if(line[0]=="CMP"){
+      mc.push("0x70");
+    } else if(line[0]=="NOT"){
+      mc.push("0x80");
+    } else if(line[0]=="OR"){
+      mc.push("0xA0");
+    } else if(line[0]=="XOR"){
+      mc.push("0xB0");
+    } else if(line[0]=="PUSH"){
+      mc.push("0xC0");
+    } else if(line[0]=="POP"){
+      mc.push("0xD0");
+    } else if(line[0]=="RET"){
+      mc.push("0xF0");
+    } else if(line[0]=="HLT"){
+      mc.push("0xFF");
+    } else if(line[0]=="AND"){
+      mc.push("0x90");
+    } else if(line[0]=="SHL"){
+      mc.push("0x97");
+    } else if(line[0]=="SHR"){
+      mc.push("0x9F");
+    } else if(line[0]=="JMP"){
+      mc.push("0x50");
+      mc.push("0x"+Math.floor(parseInt(line[1],16)/256).toString(16));
+      mc.push("0x"+Math.floor(parseInt(line[1],16)%256).toString(16));
+    } else if(line[0]=="JE"){
+      mc.push("0x51");
+      mc.push("0x"+Math.floor(parseInt(line[1],16)/256).toString(16));
+      mc.push("0x"+Math.floor(parseInt(line[1],16)%256).toString(16));
+    } else if(line[0]=="JG"){
+      mc.push("0x52");
+      mc.push("0x"+Math.floor(parseInt(line[1],16)/256).toString(16));
+      mc.push("0x"+Math.floor(parseInt(line[1],16)%256).toString(16));
+    } else if(line[0]=="JL"){
+      mc.push("0x53");
+      mc.push("0x"+Math.floor(parseInt(line[1],16)/256).toString(16));
+      mc.push("0x"+Math.floor(parseInt(line[1],16)%256).toString(16));
+    } else if(line[0]=="JGE"){
+      mc.push("0x54");
+      mc.push("0x"+Math.floor(parseInt(line[1],16)/256).toString(16));
+      mc.push("0x"+Math.floor(parseInt(line[1],16)%256).toString(16));
+    } else if(line[0]=="JLE"){
+      mc.push("0x55");
+      mc.push("0x"+Math.floor(parseInt(line[1],16)/256).toString(16));
+      mc.push("0x"+Math.floor(parseInt(line[1],16)%256).toString(16));
+    } else if(line[0]=="JNE"){
+      mc.push("0x56");
+      mc.push("0x"+Math.floor(parseInt(line[1],16)/256).toString(16));
+      mc.push("0x"+Math.floor(parseInt(line[1],16)%256).toString(16));
+    } else if(line[0]=="CALL") {
+      mc.push("0x60");
+      mc.push("0x"+Math.floor(parseInt(line[1],16)/256).toString(16));
+      mc.push("0x"+Math.floor(parseInt(line[1],16)%256).toString(16));
+    }else if(line[0]=="CE"){
+      mc.push("0x61");
+      mc.push("0x"+Math.floor(parseInt(line[1],16)/256).toString(16));
+      mc.push("0x"+Math.floor(parseInt(line[1],16)%256).toString(16));
+    } else if(line[0]=="CG"){
+      mc.push("0x62");
+      mc.push("0x"+Math.floor(parseInt(line[1],16)/256).toString(16));
+      mc.push("0x"+Math.floor(parseInt(line[1],16)%256).toString(16));
+    } else if(line[0]=="CL"){
+      mc.push("0x63");
+      mc.push("0x"+Math.floor(parseInt(line[1],16)/256).toString(16));
+      mc.push("0x"+Math.floor(parseInt(line[1],16)%256).toString(16));
+    } else if(line[0]=="CGE"){
+      mc.push("0x64");
+      mc.push("0x"+Math.floor(parseInt(line[1],16)/256).toString(16));
+      mc.push("0x"+Math.floor(parseInt(line[1],16)%256).toString(16));
+    } else if(line[0]=="CLE"){
+      mc.push("0x65");
+      mc.push("0x"+Math.floor(parseInt(line[1],16)/256).toString(16));
+      mc.push("0x"+Math.floor(parseInt(line[1],16)%256).toString(16));
+    } else if(line[0]=="CNE"){
+      mc.push("0x66");
+      mc.push("0x"+Math.floor(parseInt(line[1],16)/256).toString(16));
+      mc.push("0x"+Math.floor(parseInt(line[1],16)%256).toString(16));
+    } else if(line[0]=="OUT"){
+      mc.push("0xE"+line[1]);
+    } else if(line[0]=="IN"){
+      mc.push("0xE"+(parseInt(line[1])+8).toString(16));
+    }
+  }
+  document.getElementById("DMC").value = mc.join("\n");
 }
 </script>
 </body>

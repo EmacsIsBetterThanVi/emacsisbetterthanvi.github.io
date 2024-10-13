@@ -531,7 +531,7 @@ function exec(){
     } else if(MEM[IP]==48){//SWP A,B
       let tmp=RA;
       RA=RB;
-      RB=RA;
+      RB=tmp;
     } else if(MEM[IP]==56){//SWP A,SP
       let tmp=RA;
       RA=SP;

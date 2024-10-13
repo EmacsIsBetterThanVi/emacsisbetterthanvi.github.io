@@ -537,7 +537,7 @@ function exec(){
       RA=SP;
       SP=tmp;
     } else if(MEM[IP]==64){
-      RA+=RB
+      RA=RA+RB;
     } else if(MEM[IP]==80){ //JMP
       let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
       IP+=2;

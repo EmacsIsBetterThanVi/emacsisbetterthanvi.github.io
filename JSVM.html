@@ -27,7 +27,7 @@ style="flex:1">
 <button onclick="reset();" style="flex:1">Reset</button>
 <button onclick="exec();" style="flex:1">Execute</button>
 </div>
-<table style="margin-top: 5px; text-align: center">
+<table id="OPTABLE1" style="position: relative; margin-top: 5px; text-align: center; visibility: visible;">
   <th>Op Code<td><b>Assembly</b></td><td><b>Op Code</b></td><td><b>Assembly</b></td></th>
   <tr><td>00</td><td>NOP</td><td>80</td><td>NOT</td></tr>
   <tr><td>10</td><td>LDA &#60x&#62</td><td>9X</td><td>AND</td></tr>
@@ -71,6 +71,39 @@ style="flex:1">
   <tr><td>9X</td><td>9F</td><td>SHR</td><td>N/A</td></tr>
   <tr><td>FX</td><td>FF</td><td>HLT</td><td>N/A</td></tr>
 </table>
+<table id="OPTABLE2" style="margin-top: 5px; text-align: center; visibility: hidden">
+  <th>Op Code<td><b>Assembly</b></td><td><b>Op Code</b></td><td><b>Assembly</b></td></th>
+  <tr><td>00</td><td>NOP</td><td>80</td><td>NOT</td></tr>
+  <tr><td>10</td><td>LDA &#60x&#62</td><td>9X</td><td>AND</td></tr>
+  <tr><td>20</td><td>SDA &#60x&#62</td><td>A0</td><td>OR</td></tr>
+  <tr><td>3X</td><td>SWPB</td><td>B0</td><td>XOR</td></tr>
+  <tr><td>40</td><td>ADD</td><td>CX</td><td>PUSH</td></tr>
+  <tr><td>5X</td><td>JMP &#60x&#62</td><td>DX</td><td>OUT X</td></tr>
+  <tr><td>6X</td><td>CALL &#60x&#62</td><td>EX</td><td>IN X</td></tr>
+  <tr><td>70</td><td>CMP</td><td>FX</td><td>RET</td></tr>
+  <th>Main OP<td><b>Sub Op</b></td><td><b>Assembly</b></td><td><b>Condition</b></td></th>
+  <tr><td>3X</td><td>38</td><td>SWPS</td><td>N/A</td></tr>
+  <tr><td>3X</td><td>34</td><td>SWPC</td><td>N/A</td></tr>
+  <tr><td>3X</td><td>3C</td><td>SWPD</td><td>N/A</td></tr>
+  <tr><td>3X</td><td>3F</td><td>LIVT</td><td>N/A</td></tr>
+  <tr><td>5X</td><td>51</td><td>JE</td><td>==</td></tr>
+  <tr><td>5X</td><td>52</td><td>JG</td><td>></td></tr>
+  <tr><td>5X</td><td>53</td><td>JL</td><td><</td></tr>
+  <tr><td>5X</td><td>54</td><td>JGE</td><td>>=</td></tr>
+  <tr><td>5X</td><td>55</td><td>JLE</td><td><=</td></tr>
+  <tr><td>5X</td><td>56</td><td>JNE</td><td>!=</td></tr>
+  <tr><td>6X</td><td>61</td><td>CE</td><td>==</td></tr>
+  <tr><td>6X</td><td>62</td><td>CG</td><td>></td></tr>
+  <tr><td>6X</td><td>63</td><td>CL</td><td><</td></tr>
+  <tr><td>6X</td><td>64</td><td>CGE</td><td>>=</td></tr>
+  <tr><td>6X</td><td>55</td><td>CLE</td><td><=</td></tr>
+  <tr><td>6X</td><td>66</td><td>CNE</td><td>!=</td></tr>
+  <tr><td>6X</td><td>6F</td><td>INT</td><td>N/A</td></tr>
+  <tr><td>9X</td><td>97</td><td>SHL</td><td>N/A</td></tr>
+  <tr><td>9X</td><td>9F</td><td>SHR</td><td>N/A</td></tr>
+  <tr><td>CX</td><td>C8</td><td>POP</td><td>N/A</td></tr>
+  <tr><td>FX</td><td>FF</td><td>HLT</td><td>N/A</td></tr>
+</table>
 </div>
 <div style="width:550px; text-align: center; margin-left: 10px">
 <h3>Registers</h3>
@@ -79,6 +112,11 @@ style="flex:1">
   Accumulator(RA):<textarea id="RA" class="MEM" rows=1 readonly=true cols=4></textarea>
   RB:<textarea id="RB" class="MEM" rows=1 readonly=true cols=4></textarea>
   Stack Pointer:<textarea class="MEM" id="SP" rows=1 readonly=true cols=4></textarea>
+</div>
+<div id="V2R" style="display: flex; visibility: hidden">
+  RC:<textarea id="RC" class="MEM" rows=1 readonly=true cols=4></textarea>
+  RD:<textarea id="RD" class="MEM" rows=1 readonly=true cols=4></textarea>
+  IVT:<textarea id="IVT" class="MEM" rows=1 readonly=true cols=4></textarea>
 </div>
 <h3>Memory</h3>
 <table>
@@ -450,7 +488,7 @@ function CONSOLE(data){
   if(data==0) return;
   let term=document.getElementById("console");
   if(data==8) term.innerHTML = term.innerHTML.slice(0, -1);
-  else if(data==12) term.innerHTML = ""
+  else if(data==12) term.innerHTML = "";
   else term.innerHTML = term.innerHTML + String.fromCharCode(data);
 }
 function push(value){
@@ -465,6 +503,9 @@ function updateVM(){
   document.getElementById("IP").innerHTML = extend(IP, 4);
   document.getElementById("RA").innerHTML = extend(RA, 4);
   document.getElementById("RB").innerHTML = extend(RB, 4);
+  document.getElementById("RC").innerHTML = extend(RC, 4);
+  document.getElementById("RD").innerHTML = extend(RD, 4);
+  document.getElementById("IVT").innerHTML = extend(IVT, 4);
   document.getElementById("SP").innerHTML = extend(SP, 4);
   for(i=0; i<256; i++){
     document.getElementById("A"+extend(i,2)).innerHTML = extend(MEM[(MEM_REGION*16)+i],2);
@@ -477,14 +518,22 @@ let RB=0;
 let SP=0;
 let MEM=[];
 let RR=0;
+let RC=0;
+let RD=0;
+let IVT=0;
 let IO=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 let IOFUNC = [CONSOLE, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+let VERSION=1;
+let VERSION_OLD=1;
 function reset(){
   IP=0;
   RA=0;
   RB=0;
   SP=0;
   RR=0;
+  RC=0;
+  RD=0;
+  IVT=0;
   IO=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
   MEM=[];
   CONSOLE(12);
@@ -492,7 +541,43 @@ function reset(){
     MEM.push(0);
   }
   updateVM();
+  if(VERSION>=2){
+    document.getElementById("V2R").style.visibility = "visible";
+    document.getElementById("OPTABLE1").style.visibility = "hidden";
+    document.getElementById("OPTABLE2").style.visibility = "visible";
+    document.getElementById("OPTABLE1").style.position = "absolute";
+  } else{
+    document.getElementById("V2R").style.visibility = "hidden";
+    document.getElementById("OPTABLE1").style.visibility = "visible";
+    document.getElementById("OPTABLE2").style.visibility = "hidden";
+    document.getElementById("OPTABLE1").style.position = "relative";
+  }
 }
+document.addEventListener('keydown', function (event){
+  if(event.defaultPrevented){
+    return;
+  }
+  if(event.key=="Escape"){
+    if(VERSION==0){
+      VERSION=VERSION_OLD;
+    } else{
+      VERSION_OLD=VERSION;
+      VERSION=0;
+    }
+  } else if(event.key=="1"){
+    if(VERSION==0){
+      VERSION=1;
+      VERSION_OLD=1;
+      reset();
+    }
+  } else if(event.key=="2"){
+    if(VERSION==0){
+      VERSION=2;
+      VERSION_OLD=2;
+      reset();
+    }
+  }
+});
 function load(){
   let read = document.getElementById("DMC").value.split("\n");
   let addr=0;
@@ -541,7 +626,7 @@ function exec(){
     } else if(MEM[IP]==80){ //JMP
       let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
       IP+=2;
-      IP=tmp;
+      IP=tmp-1;
     } else if(MEM[IP]==81){ //JE
       let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
       IP+=2;
@@ -567,57 +652,57 @@ function exec(){
       IP+=2;
       if(RR!=0) IP=tmp-1;
     } else if(MEM[IP]==96){ //CALL
-      push(tmp%256);
-      push(Math.floor(tmp/256))
+      push(IP%256);
+      push(Math.floor(IP/256))
       let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
       IP+=2;
-      IP=tmp;
+      IP=tmp-1;
     } else if(MEM[IP]==97){ //CE
       let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
       IP+=2;
       if(RR==0){
-        push(tmp%256);
-        push(Math.floor(tmp/256));
+        push(IP%256);
+        push(Math.floor(IP/256));
         IP=tmp-1;
       }
     } else if(MEM[IP]==98){ //CG
       let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
       IP+=2;
       if(RR==1) {
-        push(tmp%256);
-        push(Math.floor(tmp/256));
+        push(IP%256);
+        push(Math.floor(IP/256));
         IP=tmp-1;
       }
     } else if(MEM[IP]==99){//CL
       let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
       IP+=2;
       if(RR==-1) {
-        push(tmp%256);
-        push(Math.floor(tmp/256));
+        push(IP%256);
+        push(Math.floor(IP/256));
         IP=tmp-1;
       }
     } else if(MEM[IP]==100){//CGE
       let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
       IP+=2;
       if(RR!=-1) {
-        push(tmp%256);
-        push(Math.floor(tmp/256));
+        push(IP%256);
+        push(Math.floor(IP/256));
         IP=tmp-1;
       }
     } else if(MEM[IP]==101){//CLE
       let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
       IP+=2;
       if(RR!=1) {
-        push(tmp%256);
-        push(Math.floor(tmp/256));
+        push(IP%256);
+        push(Math.floor(IP/256));
         IP=tmp-1;
       }
     } else if(MEM[IP]==102){//CNE
       let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
       IP+=2;
       if(RR!=0) {
-        push(tmp%256);
-        push(Math.floor(tmp/256));
+        push(IP%256);
+        push(Math.floor(IP/256));
         IP=tmp-1;
       }
     } else if(MEM[IP]==112){ //CMP
@@ -630,38 +715,67 @@ function exec(){
       RA=parseInt(tmp.join(''),2);
     } else if(MEM[IP]==144){//AND
       let tmp=RA.toString(2).split('');
-      let tmp2=RA.toString(2).split('');
+      let tmp2=RB.toString(2).split('');
       for(i=0; i<tmp.length; i++){
         tmp[i] = tmp[i]==tmp2[i] ? '1':'0';
       }
       RA=parseInt(tmp.join(''),2);
     } else if(MEM[IP]==160){//OR
       let tmp=RA.toString(2).split('');
-      let tmp2=RA.toString(2).split('');
+      let tmp2=RB.toString(2).split('');
       for(i=0; i<tmp.length; i++){
         tmp[i] = (tmp[i]=='1' || tmp2[i]=='1') ? '1':'0';
       }
       RA=parseInt(tmp.join(''),2);
     } else if(MEM[IP]==176){ //XOR
       let tmp=RA.toString(2).split('');
-      let tmp2=RA.toString(2).split('');
+      let tmp2=RB.toString(2).split('');
       for(i=0; i<tmp.length; i++){
         tmp[i] = tmp[i]!=tmp2[i] ? '1':'0';
       }
       RA=parseInt(tmp.join(''),2);
     } else if(MEM[IP]==192){ //PUSH
       push(RA);
-    } else if(MEM[IP]==208){ //POP
+    } else if(MEM[IP]==208 && VERSION<2){ //POP
       RA=pop();
-    } else if(Math.floor(MEM[IP]/16)==14){
-      if(MEM[IP]>=232){
-        RA=IO[MEM[IP]%16];
+    } else if(Math.floor(MEM[IP]/16)==13 && VERSION>=2){
+      IO[MEM[IP]%16]=RA;
+    }else if(Math.floor(MEM[IP]/16)==14){
+      if(VERSION>=2){
+          RA=IO[MEM[IP]%16];
       } else{
-        IO[MEM[IP]%16]=RA;
+        if(MEM[IP]>=232){
+          RA=IO[MEM[IP]%16];
+        } else{
+          IO[MEM[IP]%16]=RA;
+        }
       }
     }else if(MEM[IP]==240){
       IP=pop()*256;
       IP+=pop()
+    } else if(MEM[IP]==52 && VERSION>=2){
+      let tmp=RA;
+      RA=RC;
+      RC=tmp;
+    } else if(MEM[IP]==52 && VERSION>=2){
+      let tmp=RA;
+      RA=RC;
+      RC=tmp;
+    } else if(MEM[IP]==54 && VERSION>=2){
+      let tmp=RA;
+      RA=RD;
+      RD=tmp;
+    } else if(MEM[IP]==63 && VERSION>=2){
+      let tmp=RA;
+      RA=IVT;
+      IVT=tmp;
+    } else if(MEM[IP]==111 && VERSION>=2){
+      IP++;
+      push(IP%256);
+      push(Math.floor(IP/256))
+      let tmp=parseInt(extend(MEM[IVT+MEM[IP]*2], 2)+extend(MEM[IVT+MEM[IP]*2+1], 2), 16);
+      IP+=2;
+      IP=tmp-1;
     }
     IP++;
     updateVM();
@@ -678,7 +792,13 @@ function asm(){
     if(line[0]=='db'){
       if(line.length>=3) mc.push("0x"+line[1]+":"+line[2])
       else mc.push("0x"+line[1]);
-    } else if(line[0]=="NOP"){
+    } else if(line[0] =='da'){
+      let j=parseInt(line[1], 16);
+      for (k=2; k<line.length; k++){
+        mc.push("0x"+j.toString(16)+":"+line[j]);
+        j++;
+      }
+    }else if(line[0]=="NOP"){
       mc.push(0);
     } else if(line[0]=="LDA"){
       mc.push("0x10");
@@ -691,7 +811,7 @@ function asm(){
     } else if(line[0]=="SWPB"){
       mc.push("0x30");
     } else if(line[0]=="SWPS"){
-      mc.push("0x3S");
+      mc.push("0x38");
     } else if(line[0]=="ADD"){
       mc.push("0x40");
     } else if(line[0]=="CMP"){
@@ -705,7 +825,8 @@ function asm(){
     } else if(line[0]=="PUSH"){
       mc.push("0xC0");
     } else if(line[0]=="POP"){
-      mc.push("0xD0");
+      if(VERSION>=2) mc.push(0xC8);
+      else mc.push("0xD0");
     } else if(line[0]=="RET"){
       mc.push("0xF0");
     } else if(line[0]=="HLT"){
@@ -773,10 +894,21 @@ function asm(){
       mc.push("0x"+Math.floor(parseInt(line[1],16)/256).toString(16));
       mc.push("0x"+Math.floor(parseInt(line[1],16)%256).toString(16));
     } else if(line[0]=="OUT"){
-      mc.push("0xE"+line[1]);
+      if(VERSION>=2) mc.push("0xD"+line[1]);
+      else mc.push("0xE"+line[1]);
     } else if(line[0]=="IN"){
-      mc.push("0xE"+(parseInt(line[1])+8).toString(16));
-    }
+      if(VERSION>=2) mc.push("0xE"+line[1]);
+      else mc.push("0xE"+(parseInt(line[1])+8).toString(16));
+    } else if(line[0]=="SWPC" && VERSION>=2){
+      mc.push("0x34");
+    } else if(line[0]=="SWPD" && VERSION>=2){
+      mc.push("0x3C");
+    } else if(line[0]=="LIVT" && VERSION>=2){
+      mc.push("0x3F");
+    } else if(line[0]=="INT" && VERSION>=2){
+      mc.push("0x6F");
+      mc.push("0x"+line[1]);
+    } 
   }
   document.getElementById("DMC").value = mc.join("\n");
 }

@@ -1,7 +1,9 @@
+<!DOCTYPE html>
 <html>
-  <body>
+  <body onload="isMobilep();">
     <header style="position: fixed; background: white; top: 0; width: 100%"><a onclick='sth("start");' href="javascript:void(0)">Back To Top</a></header>
     <h1 id="start">Raphael Wise's Mobile CSP portfolio</h1>
+    <p id="note" style="visibility:hidden; position:absolute">Use of a mobile browser for viewing this webpage is highly discoraged.</p>
     <a onclick='sth("about");' href="javascript:void(0)">About me</a><br>
     <a onclick='sth("about2");' href="javascript:void(0)">About my Partner</a><br>
     <a onclick='sth("questions");' href="javascript:void(0)">Portfolio Questions</a><br>
@@ -27,7 +29,8 @@
     <a onclick='sth("Q_2.11");' href="javascript:void(0)">2.11</a><br>
     <br>
     <a onclick='sth("Q_4.8");' href="javascript:void(0)">4.8</a>
-    <a onclick='sth("Q_4.10");' href="javascript:void(0)">4.10</a>
+    <a onclick='sth("Q_4.10");' href="javascript:void(0)">4.10</a><br>
+    <a onclick='sth("Q_5.3");' href="javascript:void(0)">5.3</a>
     <h3 id="Q_2.2">2.2</h3>
     <p>1. Event-driven programming is based around the concept of events, user inputs, and raised program processes, being bound to a function. <i>The I Have a Dream</i> app used the "On button clicked" event to play the sound.</p>
     <p>2. It is only semi-possible to coreate a app without event based program, since one can technicaly uses a process to await all user input at the begining as part of the INIT function, howerver such a program has limited capability.</p>
@@ -77,6 +80,41 @@
     <p>4. One benefit of a city fire department using simulations is that this system allows them to test multiple conditions, free of danger, however a simulation can only test the scenearios that the designer can think off.</p>
     <p>5. A model I use in my everyday life is ETAs of trains, which are calculated based entirely on past times, and locations. This captures the details of common issues such as other trains being late, or ongoing track matenence, but does not account for uncommon problomes.</p>
     <h3 id="Q_4.10">4.10</h3>
+    <p>1. In the final version of the map tour app collected an ineger location and and a name for the location, which is requested by the user, and is one hundread percent optional.</p>
+    <p>2. Social media apps have fully removed our privacy, since everything said is public, and is collected whether we like it or not.</p>
+    <p>3. It is posible to indetify a person within a reasonable selection based on gender and date of birth, which a zip code is usualy sufficent to narrow this down to a workable number.</p>
+    <p>4. GPS navigation collects location and destination to generate a path. This data is sent to the servers which uses trafic data to calculate the shortest posible root. If this data was stored, or obtained by a person trying to locate a person would have no trouble finding the current location, or their destination, with paterns they could determin their life style, which is more information than most people what others to know about them.</p>
+    <p>5. The privace act is not very effective since the government in response to 9/11 created an agency which is not effected by the Privacy Act. Also many other operarations bypased it through private companies</p>
+    <p>6. I don't particularly care about privacy, if I was given the option I would probobly not give the companies by information, but since I am not really given that choice, I will wilingly accept my lack of privacy.</p>
+    <p>7. Any and all interactions we make with any form of public computer system, and some private computer systems, leave a log of our usage start, and end times, when some events ocure, and where we were. It is quite important for people to know this, to know what is known about them, and who knows what regarding their information.</p>
+    <h3 id="Q_5.2">5.2</h3>
+    <p>1. </p>
+    <p>2. The forward() procedure is limited to a API programer defined distance, while the forward(distance) now uses the distance defined by the API user, and as such allows for more variation.</p>
+    <p>3. The turn() procedure is limited to a API programer defined angle, typicaly 90 degrees. This abstraction of adding turn(angle) solves the probolam of angles that do not have φ mod 90 = 0, allowing arbitrary rotations within the API.
+    <h3 id="Q_5.3">5.3</h3>
+    <code><pre>1. PROCEDURE NumberGuesingGame(MAX){
+    MIN <- 0
+    VALUE <- ROUND(MAX/2)
+    ANS <- "N"
+    COUNT <- 1
+    REPEAT UNTIL(ANS = "C"){
+      DISPLAY(VALUE)
+      ANS <- INPUT()
+      IF(ANS = "H"){
+        MIN <- VALUE
+      } ELSE IF(ANS = "L"){
+        MAX <- VALUE
+      } ELSE{
+        COUNT <- COUNT - 1
+      }
+      VALUE <- ROUND((MAX-MIN)/2+MIN)
+      COUNT <- COUNT + 1
+    }
+    </pre></code></p>
+    <p>2. The maximum number of guesses my algorithm can take is seven for from one to 100(log base 2 of 100 is between 6 and 7</p>
+    <p>3. The maximum number of guesses my algorithm can take is nine for from one to 500(log base 2 of 500 is between 8 and 9</p>
+    <p>4. The best solotion to finding the Ace of Spades in an unordered deck would be to scan through the entire deck(Some search algarithms might make use of multiple proceses to search from multiple ends of the list or deck by dividing the deck into multiple equal pieces, which it runs a linar search algarithm from the center and ends for a 4 process search algarithm(This completes the process in at most 1/4 of the total cycles of a single process search))</p>
+    <p>5. An example of a search I do on a regular basisis is land searching, a liniar search through a deck of magic cards, which can contain multiple instances of the same target.
     <h2 id="projects">Create Projects</h2>
     <ol>
     <li><a onclick='sth("C1.1");' href="javascript:void(0)">Journel</a></li>
@@ -91,18 +129,20 @@
     <li><a onclick='sth("C1.4.4");' href="javascript:void(0)">Data and Procedual Abstraction</a></li>
     </ol></li>
     </ol>
-    <img src="https://emacsisbetterthanvi.github.io/MobileCSP/Create1FullCode.png">
     <h3 id="C1.1">Create Project 1.1: Journel</h3>
     <div style="display: flex">
-    <p style="flex: 10">1. This app reads text from either spoken or typed input, which it translates into another language, which is both displayed and read back. This functaionality is controled by the SpeachRecognizer, Translater, and TextToSpeech elements in MIT app inventor. </p>
+    <div style="flex: 10"><p>1. This app reads text from either spoken or typed input, which it translates into another language, which is both displayed and read back. This functaionality is controled by the SpeachRecognizer, Translater, and TextToSpeech elements in MIT app inventor. </p>
+    <img src="https://emacsisbetterthanvi.github.io/MobileCSP/Create1FullCode.png" width=1000>
+    </div>
     <img src="https://emacsisbetterthanvi.github.io/MobileCSP/Create1.1.png" width=180>
     </div>
     <p>2. My app includes a procedure called "UpdateSpeachToText" which updates the SpeachRecognizer stops the Speach to Text if it has been started by this procedure. If Speach to Text has not been started by this procedure and the NoStart argument has not been set then it will set the SpeachRecognizer's language, and start speach to text. The procedure also sets the start button to the correct image, which it uses to determine if speach to text has been started.</p>
     <p>3a. The translation part, and the Text To Speech system works, however the Speech To Text errors out with the code "unrecognized method: Irritants: (SetLanguage)", so at least one part is non-functional, also for some reason it will not speack chinese, however that could be a system difference<br>3b. </p>
     <p>4. My code is almost fully refactored, with only one set of repeated identical blocks, which are simple asignment operaters of "SPEAK ← true (Set global SPEAK to true)", and as such it would make very little sense to surround them in a function.</p>
     <h3 id="C1.2">Create Project 1.2: Video</h3>
-    <video>
-      <source src="https://emacsisbetterthanvi.github.io/MobileCSP/Create1.mp4">
+    <p>All Speach is simulated using text to speach from another device in MIT app inventor, and the video is 4.3 MB.</p>
+    <video hight="300" width="200">
+      <source controls src="https://emacsisbetterthanvi.github.io/MobileCSP/Create1Video.MP4">
       Your browser does not support the video tag
     </video>
     <h3 id="C1.3">Create Project 1.3: Peronalized Project Reference</h3>
@@ -133,7 +173,7 @@
     <p>a. This program translates one language to another, and demonstrates the pronucation of the language, with the ability to say a sentance for it to translate, which it hopefuly autodetects the language</p>
     <p>b. The program functions by sending data to the translation API provided by MIT App Inventor, then sending the responce to the MIT App Inventor Text To Speach System. The spoken input is handled by requesting data from the Speach to Text System built into MIT App Inventor.</p>
     <p>c. The inputs of the programs are a text box which can be typed into, or a speech to text system, which can be started by pressing a button. The outputs of the programs are in a text box, and audiable speech of the contents of the text box.</p>
-    <p>d. The users of my app is people who do not speak the same language as another person that they are talking with, which they would use this app to get translations, and theoreticaly use it as a second person who speaks both languages saying thier sentance in thier language, which it then anounces the translation in the other language.</p>
+    <p>d. The users of my app is people who do not speak the same language as another person that they are talking with, which they would use this app to get translations, and theoreticaly use it as a second person who speaks both languages saying their sentance in their language, which it then anounces the translation in the other language.</p>
     <h4 id="C1.4.2">2. Algorithm Development</h4>
     <p>The UpdateSpeachToText function uses an if statement to branch into two seperate parts based on whether or not the start button is using the second image or the argument NoStart was set to true, performing a reset procedure on the SpeachToText System by updating the translation, in spoken mode, stoping the SpeachToText, and updating the image in the button to the Microphone Inactive state. If the boolean expresion evaluates to false then it starts the SpeachToText system, and updates the image to the Microphone Active state.</p>
     <h4 id="C1.4.3">3. Erros and Testing</h4>
@@ -155,7 +195,14 @@
       function sth(hash){
         location.hash="#start";
         location.hash="#"+hash;
+      } 
+      function isMobilep(){
+        if(window.navigator.userAgent.includes("Mobi")){
+          document.getElementById("note").style.visibility = "visible";
+          document.getElementById("note").style.position = "static";
+        }
       }
+      
     </script>
     <h2 id="OtherProjects">Other Projects</h2>
     <a href="https://github.com/EmacsIsBetterThanVi/x86-DOS">My OS: DOS 64</a><br>

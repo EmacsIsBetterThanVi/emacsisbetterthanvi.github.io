@@ -796,7 +796,7 @@ function asm(){
     } else if(line[0] =='da'){
       let j=parseInt(line[1], 16);
       for (k=2; k<line.length; k++){
-        mc.push("0x"+j.toString(16)+":"+line[j]);
+        mc.push("0x"+j.toString(16)+":"+line[k]);
         j++;
       }
     }else if(line[0]=="NOP"){

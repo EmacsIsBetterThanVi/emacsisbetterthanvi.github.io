@@ -120,7 +120,7 @@ style="flex:1">
 </div>
 <h3>Memory</h3>
 <table>
-<th>
+<th><textarea id="mr" rows=1 cols=2></textarea>
 <td>X0</td><td>X1</td><td>X2</td><td>X3</td>
 <td>X4</td><td>X5</td><td>X6</td><td>X7</td>
 <td>X8</td><td>X9</td><td>XA</td><td>XB</td>
@@ -448,10 +448,10 @@ body{
 td > textarea{
   background-color: lightblue;
   color: black;
-  border: none
+  border: none;
 }
 td, th, table{
-  border: 1px solid black
+  border: 1px solid black;
 }
 table{
   margin-left: auto;
@@ -464,7 +464,7 @@ button{
 .MEM{
   margin-right: 5px;
   color: black;
-  background-color: lightblue
+  background-color: lightblue;
 }
 </style>
 <script>
@@ -507,6 +507,7 @@ function updateVM(){
   document.getElementById("RD").innerHTML = extend(RD, 4);
   document.getElementById("IVT").innerHTML = extend(IVT, 4);
   document.getElementById("SP").innerHTML = extend(SP, 4);
+  MEM_REGION=document.getElementById("mr").value;
   for(i=0; i<256; i++){
     document.getElementById("A"+extend(i,2)).innerHTML = extend(MEM[(MEM_REGION*16)+i],2);
   }
@@ -537,7 +538,7 @@ function reset(){
   IO=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
   MEM=[];
   CONSOLE(12);
-  for(i=0; i<256; i++){
+  for(i=0; i<65536; i++){
     MEM.push(0);
   }
   updateVM();
@@ -773,7 +774,7 @@ function exec(){
       IP++;
       push(IP%256);
       push(Math.floor(IP/256))
-      let tmp=parseInt(extend(MEM[IVT+MEM[IP]*2], 2)+extend(MEM[IVT+MEM[IP]*2+1], 2), 16);
+      let tmp=parseInt(extend(MEM[(256*IVT)+MEM[IP]*2], 2)+extend(MEM[(256*IVT)+MEM[IP]*2+1], 2), 16);
       IP+=2;
       IP=tmp-1;
     }

@@ -522,12 +522,19 @@ let RR=0;
 let RC=0;
 let RD=0;
 let IVT=0;
+let FLAGS=0 /* 00RRCMMI;
+	       RR: 00 None, 01 Equal, 10 Greater, 11 Lesser;
+	       C: 1 Carry Set, 0 Carry Clear
+	       MM: 00 Standered Mode, 01 Full 16 bit mode, 10 32 bit protected mode
+	           11 Virtual JSVM version 1 mode
+  */
 let IO=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 let IOFUNC = [CONSOLE, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
 let VERSION=1;
 let VERSION_OLD=1;
 function reset(){
   IP=0;
+  FLAGS=0;  
   RA=0;
   RB=0;
   SP=0;

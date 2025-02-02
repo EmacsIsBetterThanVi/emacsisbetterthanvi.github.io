@@ -35,8 +35,17 @@
     <a onclick='sth("Q_3.6");' href="javascript:void(0)">3.6</a>
     <a onclick='sth("Q_3.7");' href="javascript:void(0)">3.7</a>
     <a onclick='sth("Q_3.8");' href="javascript:void(0)">3.8</a>
+    <a onclick='sth("Q_3.9");' href="javascript:void(0)">3.9</a>
+    <a onclick='sth("Q_3.10");' href="javascript:void(0)">3.10</a>
     <br>
+    <a onclick='sth("Q_4.2");' href="javascript:void(0)">4.2</a>
+    <a onclick='sth("Q_4.3");' href="javascript:void(0)">4.3</a>
+    <a onclick='sth("Q_4.4");' href="javascript:void(0)">4.4</a>
+    <a onclick='sth("Q_4.5");' href="javascript:void(0)">4.5</a>
+    <a onclick='sth("Q_4.6");' href="javascript:void(0)">4.6</a>
+    <a onclick='sth("Q_4.7");' href="javascript:void(0)">4.7</a>
     <a onclick='sth("Q_4.8");' href="javascript:void(0)">4.8</a>
+    <a onclick='sth("Q_4.9");' href="javascript:void(0)">4.9</a>
     <a onclick='sth("Q_4.10");' href="javascript:void(0)">4.10</a><br>
     <a onclick='sth("Q_5.2");' href="javascript:void(0)">5.2</a>
     <a onclick='sth("Q_5.3");' href="javascript:void(0)">5.3</a>
@@ -93,7 +102,7 @@
     <p>3. An assembely language and the accociated assembler is a great example of an abstraction, since assembely is a collection of strings(text) which will be assembled into the machine code, which is closer to how the machine functions than the strings are, however the machine code is still an abstraction, as I stated in my previous answer.</p>
     <h3 id="Q_2.9">2.9</h3>
     <p>1. 921 is 0b001101010011</p>
-    <p>2. My birth day in binary coded as MMDD is 1001100001</p>
+    <p>2. My birth day in binary coded as MMDD is 110010001</p>
     <p>3. The octal number system has 8 digets 0 to 7. This is in accordance with the base-didgets relation of for a given base N, there are N didgets, 0 to N-1. Typicaly if the base exceeds 10 then the extra digets are assigned into the Latin alphabet, then the greek alphabet, the typicaly into assorted characters from the ASCII code points. Hexadecimal(Base 16) has 16 didgets, 0-F.</p>
     <p>4. The next student is assigned id 0b10010100, and the 10th(Base 10) is assigned 0b10011101</p>
     <h3 id="Q_2.10">2.10</h3>
@@ -136,13 +145,52 @@
     <p>4.An API simplifies complex Programing tasks by removing the complicated parts from the program and reloacting it to a seperete section.</p>
     <p>5. I don't use my phone, however I know that google translates has a API which allows one to interface with it using put, and get requests. However google is bad at documentation so I am not fully sure how one uses it.</p>
     <p>6. GPS is used to determine where you are, this is done by connecting to geosynconous orbiting satalites, which have a prespecified location. Then the GPS finds the distance to the three closesest GPS satalites, and triagulates it's location</p>
-    <p>7. </p>
+    <p>7. <img src="https://emacsisbetterthanvi.github.io/MobileCSP/3.8.png" width=310></p>
+    <h3 id="Q_3.9">3.9</h3>
+    <p>1. Saying data are persistant means that they are not lost when the program restarts.</p>
+    <p>2. Data in stored in a database is retaind until the database is cleared meanualy, or in otherwords, is persistent, while data stored in global variables is cleared when the program is restarted, or is non-persistent.</p> 
+    <p>3. <img src="https://emacsisbetterthanvi.github.io/MobileCSP/3.9.png" width=310></p>
+    <p>4. One enhancment I made is the ability to create, and persistantly store addional markers. When a point is long pressed on the map, a maker is created, requesting a name, and causing an update in a list of all the elements, their longitutes and latiude, then all the items are stored. Once the update is made a new UI object is created at that position to represent the marker. When the program starts, every item in these lists is processed, and a marker is created for them.</p>
+    <p>5. I have handled for button presses, data base requests, a varity of other touch events, back button presses, list view item selects, however there are dozens of events, and I never intend to use any of them, since I don't like app inventor, some examples of which  include lost and got focus, touch up and touch down, and many others on components I have not even used.</p>
+    <h3 id="Q_3.10">3.10</h3>
+    <p>1. Metadata is data about a file, for instance metadata could include creation time to indicate how old a file is, or it could help password lock a pdf, securing the data in the pdf for a more secure file share.</p>
+    <p>2. A model is a representation of a physical event as mathmatical equations.</p>
+    <p>3. A raster image is just the colors of each pixle, it does not matter whether the data is words, or images, while the ascii representation is a way to store letters as numbers in a computer using a predefined standard.</p>
+    <p>4. Filename extenstions are the piece after the piriod in a file name, which states what type of file it is, for instance a png file will have the extension ".png" while a ms-docs file will have the extenstion ".doc". Traditonaly extenstions are 3 letters long, since most were standardized by MS-DOS, which used the FAT file system, a 8.3 name.extenstion file system format.</p>
+    <p>5. Lossless representation is a representation of any form of data which does not lose any part or quality of the data, while lossy representations lose some amount of the quality of the data. Lossless representations take up more space, but are closser to the original that lossy representations.</p>
+    <p>6. Steganography is the science of hidding information within data, commonly images, such as injecting a name into the data for a image file. The algorithm for steganography used in this activity relies on the simplicity of bitmaps to hide a few pixels at the top corner of the image, with thier color actualy being the ascii data for a 3 letter word.</p>
+    <p>7. In order to truely delete a document from one's computer they can either overwrite the entire file with some preknown value, such as zero's, then delete the file, or delete the file, then zero all empty space on the drive with <code>cat /dev/zero > zero</code> then delete the zero file, or the final solution is to move all files off of the drive, then use <code>dd if=/dev/zero of=/dev/{drive device name}</code>. If one wants a more secure deletion, you could use /dev/urandom, then /dev/zero, making sure to delete the file in between drive free space overwrites.</p>
+    <p>8. Free and open source software is software which one can view the source code, free of charge, an example of this is firefox, which is hosted as a git reposotory at <a href="https://searchfox.org/mozilla-central/source">https://searchfox.org/mozilla-central/source</a></p>
+    <p>1. Retouching allows for the modification of photographic evidence that will be presented in court, and similar problems.</p>
+    <p>2. I would rather own a camera which does not messure quality in mega-pixels, since I am not a beliver in everthing being technolagy. I have made computers fill every second of my free time not already used by other hobbies, and I still think that cameras should use film.</p>
+    <p>3. An example of a computer model is useing computes to simulate how some medications are likely to react</p>
+    <p>4. An example of open source software which positivly impacts society is GNU make, a program which facilitates easely building complext computer programs. It's source code can be found at <a href="https://git.savannah.gnu.org/cgit/make.git/tree/">https://git.savannah.gnu.org/cgit/make.git/tree/</a>. The main positive impact this has on society is that it simplifies the process of building most open-source programs, since it is just one command, rather than several.</p>
+    <h3 id="Q_4.2">4.2</h3>
+    <p>1. Timer trigered events, which occures every certain amount of time</p>
+    <p>2. The procedure I defined in this program helps manage complexity by making calls to updated the location a simple function rather than a multiple part function calling two seperatate functions to be passed as arguments</p>
+    <h3 id="Q_4.3">4.3</h3>
+    <p>1. Empethize maps to investigating, since that is the goal of investigating, finda  problem to solve, and empethizing is a decent way of doing this, define and a ideate are both parts of design, prototype and test map to them selves, since that is constant between systems.</p>
+    <p>2. The enhancement I made was to increse the speed of the random location seting every time it is clicked, which adds to the challange. My first block updates the speed, while my second one resets it<img src="https://emacsisbetterthanvi.github.io/MobileCSP/4.3a.png" width=310><img src="https://emacsisbetterthanvi.github.io/MobileCSP/4.3b.png" width=310></p>
+    <p>3. I inspected the entire documentation on this, and I have no clue which reset procedure this question is refering to, so I will answer the question asked in the google docs. One would program this by having a touched event for the bad sprite, which causes the loss of one point, one for the good sprite, which adds 2 points, and a event for the canvas which causes the loss of 1 point, since -1-1 is -2 and 2-1 is 1</p>
+    <p>4. To increase the speed of the image sprite, simply set the timer to triger more often to a maximum of once every milisecond</p>
+    <h3 id="Q_4.5">4.5</h3>
+    <p>1. <code><pre>if not noChocolate then chocolate
+else if not noStrawberry then strawberry
+else vanilla</pre></code>
+    <p>2. sum=10</p>
+    <p>3. If the coin flip simulator came up heads 55% of the time then I would concider the random number generation to be slightly flawed, not generating a 1 or zero value with equal chance of either</p>
+    <h3 id="Q_4.7">4.7</h3>
+    <p>A psudo-random number genrator can, though it is not very common, generete the same number many times, also a random number generator can have bounds, if the bounds were set to clamp between min 9 and max 9, then all it would output is 9. Alternativly it could be based on interavle, outputing a 9 every random amount of time.</p>
     <h3 id="Q_4.8">4.8</h3>
     <p>1. The main difference between Bill Nye's solar system model and the Second Life model is the medium, with Bill Nye's model being a physical medium, meanwill the Second Life model is in a computer, and is capable of some addional tasks such as simulating orbit</p>
     <p>2. My hypothosis is that if there were a lot more wolves then bunnies then the wolf population would quickly crash after the wolves had eaten most of the bunnies, and soon only the grass will survive. With 10 wolves and 2 rabbits the wolf population crashed, but the rabbits survived, creating a sinusoidal behavior amoung rabbits</p>
     <p>3. Only rabbits, wolves, and grass were included in this simulation because the simulation is focused on the interaction between wolf population and rabbit populations. This introduces bias because it concentrats entierly on one aspect of the behaviors of the population.</p>
     <p>4. One benefit of a city fire department using simulations is that this system allows them to test multiple conditions, free of danger, however a simulation can only test the scenearios that the designer can think off.</p>
     <p>5. A model I use in my everyday life is ETAs of trains, which are calculated based entirely on past times, and locations. This captures the details of common issues such as other trains being late, or ongoing track matenence, but does not account for uncommon problomes.</p>
+    <h3 id="Q_4.9">4.9</h3>
+    <p>1. The most abstract genration of the 4-bit bit simulators was the generation 2, which uses assembly, abstacting away the exact numbers, or having to key them in as binary</p>
+    <p>2. The fetch step retrieves the instruction from memory, but does not execute it, since that is part of the execute step</p>
+    <p>3. Assembly programing is done using abstract words, which map to the various functions. Some assembly languages also support arbitrary other data types, which are converted into numbers during the assembling processes. Meanwhile machine language programing is entering the code directly as it will be processed in the machine, or at one level higher as hex codes.</p>
     <h3 id="Q_4.10">4.10</h3>
     <p>1. In the final version of the map tour app collected an ineger location and and a name for the location, which is requested by the user, and is one hundread percent optional.</p>
     <p>2. Social media apps have fully removed our privacy, since everything said is public, and is collected whether we like it or not.</p>
@@ -243,7 +291,7 @@
       recipient's mailbox ← Insert_at_front_of_list("sender1:7.13:hello")
     }</pre>
     <p>6. Modern applications use encryped conections, and as such are fairly secure, at least until someone breaks the encryption scheme, or finds a security flaw in the server to claim the data without taping the conection.</p>
-    <h3 id="q_6.5">6.5</h3>
+    <h3 id="Q_6.5">6.5</h3>
     <p>1. My caesar decrypt function instead runs through caesarEncrypt with a shift of 86 minus the shift value(I have 86 characters in my caesar encryption alphabet), and as such I do not really have a caesarDecrypt function.</p>
     <p>2. caesarDecrypt decrypts the the message so that it can be read, this contributes to the overall functionality of the program by working as the other end of the message stream.</p>
     <p>3. A function returns a value, while a procedure does not nessisarily. An example of a function might(I am using C)<code><pre>char * concat(char * str1, char * str2, int str1len, int str2len){
@@ -384,6 +432,11 @@
     <li><a onclick='sth("C1.4.4");' href="javascript:void(0)">Data and Procedual Abstraction</a></li>
     </ol></li>
     </ol>
+    <ol>
+      <li><a onclick='sth("C2.1");' href="javascript:void(0)">Journel</a></li>
+      <li><a onclick='sth("C2.2");' href="javascript:void(0)">Code</a></li>
+      <li><a onclick='sth("C2.3");' href="javascript:void(0)">Video</a></li>
+    </ol>
     <h3 id="C1.1">Create Project 1.1: Journel</h3>
     <div style="display: flex">
     <div style="flex: 10"><p>1. This app reads text from either spoken or typed input, which it translates into another language, which is both displayed and read back. This functaionality is controled by the SpeachRecognizer, Translater, and TextToSpeech elements in MIT app inventor. </p>
@@ -398,7 +451,7 @@
     <p>4. My code is almost fully refactored, with only one set of repeated identical blocks, which are simple asignment operaters of "SPEAK ← true (Set global SPEAK to true)", and as such it would make very little sense to surround them in a function.</p>
     <h3 id="C1.2">Create Project 1.2: Video</h3>
     <p>All Speach is simulated using text to speach from another device in MIT app inventor, and the video is 4.3 MB.</p>
-    <video hight="300" width="200">
+    <video controls hight="300" width="200">
       <source controls src="https://emacsisbetterthanvi.github.io/MobileCSP/Create1Video.MP4">
       Your browser does not support the video tag
     </video>
@@ -439,8 +492,8 @@
     <h4 id="C1.4.4">4. Data and Procedural Abstraction</h4>
     <p>a. The procedure idetified in part <a onclick='sth("C1.3_A");' href="javascript:void(0)">3A Procedure</a> updates much of the app, such as starting/stoping speach to text, calling for translation in spoken mode, and updating the speech to text request button. This is nessissary for much of the functionality of the app.</p>
     <p>The procedual abstraction remove all need for the usage the same segement of code, beyond a simple function call, more than once, while the data abstraction is mostly to carry values into events and procedures as arguments, with one variable used to cary a value into an event which does not support the required argument.</p>
-    <h3 id="C2.1.1">Create Project 2.1</h3>
-    <p>Femto can read user input, and from disk. It can also print to the screen. Further development of Femto will add file support, and additional commands</p>
+    <h3 id="C2.1">Create Project 2.1</h3>
+    <p>1. Femto can read user input, and from disk. It can also print to the screen. Further development of Femto will add file support, and additional commands</p>
     <p>2. I am using pure intel syntax x86 assembly, and as such I don’t really have “variables”, but rather a multitude of labels, such as the active disk, the SysFlags boolean collection, VGA_BASE, which is the base segment of the VGA memory for the associated screen, and VAddr, which points to the current video memory address. I also have numerous constants, such as BootLRD and BootLKF, which are informational messages, SCAN, which contains scan code set 2 scan codes, in the order I have in LOWER and UPPER which contain all the characters associated with given standard keys, in their unshifted and shifted forms, respectively. The ScanCodeToChar function iterates over SCAN to locate ah in SCAN. This is done using two cmp(Compare) and je(Jump Equal) instruction pairs, the first pair, which compares the current item of SCAN to zero, breaks the loop as failure if the item has not been found, and the other compares the current item with the contents of ah(Our target), and breaks the loop as success. The end of the loop has jmp .loop(Jump to the start of the loop) in order to loop back to the beginning if this item was not our target. If we did not have our “list”(it is just a bunch of consecutive data addresses, since a list is a much higher level concept), the ScanCodeToChar would be a several kilobyte long section(possibly even a megabyte of assembly). One procedure I developed is ReadInput which is a part of the standard library for Femto, and is intended to read an item off of the INPUT_BUFFER. This is done by pointing to the input buffer, adding the read head  to our pointer, reading our data, then moving the read head forward(reset to zero if it exceeds our buffer’s size), and then returning our data in al. Nothing is done if the data is blank. This procedure uses selection by invoking .reset if the read head is passed the end of the buffer(cmp byte [cs:IRHEAD], 32 and je .reset)</p>
     <code><pre>ReadInput:
     	push bx
@@ -532,6 +585,12 @@ int 27h</pre></code><p>(int 27h is mostly the same thing as call print except it
     <p>3a. Several errors have occurred throughout development including random jumps into the BIOS(These turned out to be jumps to non-code segments.), current results show that it mostly works, though the file locator is non-functional.</p>
     <p>3b. I developed this mostly during break, and had no user feedback from peers as a result.</p>
     <p>4. My code can not be further refactored as far as I know. Assembly is extremely dense, and might have the same set of instructions be used many times without a call being desirable, since one might have to set the same registers outside of the call. On occasion it is more efficient to expand one’s code than to refactor it into calls, space wise at least.</p>
+    <h3 id="C2.2">2. <a href="https://emacsisbetterthanvi.github.io/MobileCSP/femto.zip">My Code</a></h3>
+    <h3 id="C2.3">3. Video</h3>
+    <video controls hight="600" width="600">
+      <source controls src="https://emacsisbetterthanvi.github.io/MobileCSP/femto.mov">
+      Your browser does not support the video tag
+    </video>
     <script>
       function sth(hash){
         location.hash="#start";
@@ -583,6 +642,6 @@ int 27h</pre></code><p>(int 27h is mostly the same thing as call print except it
     <a href="https://github.com/EmacsIsBetterThanVi/ODE">My own interpted language: ODE</a><br>
     <a href="https://github.com/EmacsIsBetterThanVi/">My github</a><br>
     <a href="https://emacsisbetterthanvi.github.io/">My website</a><br>
-    <a href="hhttps://github.com/EmacsIsBetterThanVi/MicroOSProject">My Other OS: FEMTOS</a>
+    <a href="https://github.com/EmacsIsBetterThanVi/MicroOSProject">My Other OS: FEMTOS</a>
   </body>
 </html>

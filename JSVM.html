@@ -621,11 +621,11 @@ function exec(){
     } else if(MEM[IP]==32){//SDA <X>
       let tmp=parseInt(extend(MEM[IP+1], 2)+extend(MEM[IP+2], 2), 16);
       IP+=2;
-      MEM[tmp]=RA;
+      MEM[tmp]=RA % 256;
     } else if(MEM[IP]==48){//SWP A,B
       let tmp=RA;
       RA=RB;
-      RB=tmp;
+      RB=tmp % 256;
     } else if(MEM[IP]==56){//SWP A,SP
       let tmp=RA;
       RA=SP;
@@ -752,45 +752,45 @@ function exec(){
       }
       RA=parseInt(tmp.join(''),2);
     } else if(MEM[IP]==192){ //PUSH
-      push(RA);
-    } else if(MEM[IP]==208 && VERSION<2){ //POP
+      push(RA % 256);
+    } else if(MEM[IP]==208 && (VERSION<2 || (FLAGS & 0b00000110)==0b00000110)){ //POP
       RA=pop();
-    } else if(Math.floor(MEM[IP]/16)==13 && VERSION>=2){
-      IO[MEM[IP]%16]=RA;
+    } else if(Math.floor(MEM[IP]/16)==13 && (VERSION>=2 || (FLAGS & 0b00000110)!=0b00000110)){
+      IO[MEM[IP]%16]=RA % 256;
     }else if(Math.floor(MEM[IP]/16)==14){
-      if(VERSION>=2){
-          RA=IO[MEM[IP]%16];
+      if(VERSION>=2 || (FLAGS & 0b00000110)!=0b00000110){
+          RA=IO[MEM[IP]%16] % 256;
       } else{
         if(MEM[IP]>=232){
-          RA=IO[MEM[IP]%16];
+          RA=IO[MEM[IP]%16] % 256;
         } else{
-          IO[MEM[IP]%16]=RA;
+          IO[MEM[IP]%16]=RA % 256;
         }
       }
     }else if(MEM[IP]==240){
       IP=pop()*256;
       IP+=pop()
-    } else if(MEM[IP]==52 && VERSION>=2){
+    } else if(MEM[IP]==52 && (VERSION>=2 || (FLAGS & 0b00000110)!=0b00000110)){
       let tmp=RA;
       RA=RC;
-      RC=tmp;
-    } else if(MEM[IP]==52 && VERSION>=2){
+      RC=tmp % 256;
+    } /* else if(MEM[IP]==52 && (VERSION>=2 || (FLAGS & 0b00000110)!=0b00000110)){
       let tmp=RA;
-      RA=RC;
+      RA=RC; // Why do I have 2 copies of this?
       RC=tmp;
-    } else if(MEM[IP]==54 && VERSION>=2){
+    } */ else if(MEM[IP]==54 && (VERSION>=2 || (FLAGS & 0b00000110)!=0b00000110)){
       let tmp=RA;
       RA=RD;
-      RD=tmp;
-    } else if(MEM[IP]==63 && VERSION>=2){
+      RD=tmp % 256;
+    } else if(MEM[IP]==63 && (VERSION>=2 || (FLAGS & 0b00000110)!=0b00000110)){
       let tmp=RA;
       RA=IVT;
-      IVT=tmp;
-    } else if(MEM[IP] == 50 && VERSION>=2) {
+      IVT=tmp % 256;
+    } else if(MEM[IP] == 50 && (VERSION>=2 || (FLAGS & 0b00000110)!=0b00000110)) {
 	push(FLAGS);
-    } else if(MEM[IP] == 54 && VERSION>=2) {
+    } else if(MEM[IP] == 54 && (VERSION>=2 || (FLAGS & 0b00000110)!=0b00000110)) {
 	FLAGS=pop();
-    } else if(MEM[IP]==111 && VERSION>=2){
+    } else if(MEM[IP]==111 && (VERSION>=2 || (FLAGS & 0b00000110)!=0b00000110)){
       IP++;
       push(IP%256);
       push(Math.floor(IP/256))
@@ -808,6 +808,7 @@ function asm(){
   let code=document.getElementById("ASM").value.split("\n");
   let mc=[];
   let line=[];
+  let bits=8;
   for(i=0; i<code.length; i++){
     line=code[i].split(" ");
     if(line[0]=='db'){
@@ -933,6 +934,16 @@ function asm(){
     } else if(line[0]=="INT" && VERSION>=2){
       mc.push("0x6F");
       mc.push("0x"+line[1]);
+    } else if(line[0]=="BITS" && VERSION>=2){
+      if (line[1]=="8"){
+	bits = 8;
+      } else if(line[1]=="16"){
+	bits = 16;
+      } else if(line[1]=="32"){
+	bits = 32;
+      } else if(line[1]=="8V"){
+	bits = 7;
+      }
     } 
   }
   document.getElementById("DMC").value = mc.join("\n");

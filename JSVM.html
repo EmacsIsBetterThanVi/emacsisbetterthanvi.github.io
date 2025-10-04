@@ -7,6 +7,7 @@
 <h1 style="text-align: center">
 JSVM
 </h1>
+<p style="text-align: center">Version 2.8</p>
 <div style="display: flex">
 <div style="width: 400px">
 <div style="text-align: center; display:flex">
@@ -116,7 +117,7 @@ style="flex:1">
   RB:<textarea id="RB" class="MEM" rows=1 readonly=true cols=4></textarea>
   Stack Pointer:<textarea class="MEM" id="SP" rows=1 readonly=true cols=4></textarea>
 </div>
-<div id="V2R" style="display: flex; visibility: hidden">
+<div id="V2R" style="display: flex; visibility: hidden; margin-top: 5px">
   RC:<textarea id="RC" class="MEM" rows=1 readonly=true cols=4></textarea>
   RD:<textarea id="RD" class="MEM" rows=1 readonly=true cols=4></textarea>
   IVT:<textarea id="IVT" class="MEM" rows=1 readonly=true cols=4></textarea>
@@ -434,6 +435,7 @@ style="flex:1">
 </tr>
 </table>
 <textarea id="console" readonly=true rows=3 cols=58></textarea>
+<canvas id="video" width="460", height="400" style="border:1px solid #000000; background-color:black;"></canvas>
 </div>
 </div>
 <style>
@@ -494,6 +496,18 @@ function CONSOLE(data){
   else if(data==12) term.innerHTML = "";
   else term.innerHTML = term.innerHTML + String.fromCharCode(data);
 }
+
+function DRAW(Trash){
+    let color = 0;
+    video.clearRect(0,0,460,400);
+    for(let y=0; y<100; y++){
+	for(let x=0; x<115; x++){
+	    color=MEM[0xA000+(y*115)+x];
+	    video.fillStyle = "#"+extend(MEM[52460+(color*3)],2)+extend(MEM[52460+(color*3)+1],2)+extend(MEM[52460+(color*3)+2],2);
+	    video.fillRect(x*4, y*4, 4, 4);
+	}
+    }
+}
 function push(value){
   MEM[SP]=value;
   SP--;
@@ -515,6 +529,7 @@ function updateVM(){
     document.getElementById("A"+extend(i,2)).innerHTML = extend(MEM[(MEM_REGION*256)+i],2);
   }
 }
+  let video = document.getElementById("video").getContext("2d");
 let MEM_REGION=0;
 let IP=0;
 let RA=0;
@@ -531,7 +546,7 @@ let FLAGS=0 /* 00RRCMMI;
 	           11 Virtual JSVM version 1 mode
   */
 let IO=[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-let IOFUNC = [CONSOLE, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null];
+let IOFUNC = [CONSOLE, null, null, null, null, null, null, null, null, null, null, null, null, null, null, DRAW];
 let VERSION=1;
 let VERSION_OLD=1;
 function reset(){
